@@ -9,7 +9,7 @@ use Exporter;
 
 @ISA = qw(Exporter);
 @EXPORT_OK = qw(rexec);
-$VERSION = '0.11';
+$VERSION = '0.12';
 
 # Preloaded methods go here.
 sub rexec {
@@ -17,7 +17,7 @@ sub rexec {
     my($sock) = IO::Socket::INET->new(PeerAddr => $host,
 				      PeerPort => 'exec(512)',
 				      Proto => 'tcp');
-    die 'Error opening sock $!' if (!defined($sock));
+    die "Error opening sock $!" if (!defined($sock));
     $sock->syswrite("0\0", 2);
     my($cmd) = shift;
     my($user, $pswd);
