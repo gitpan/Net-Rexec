@@ -1,14 +1,15 @@
 package Net::Rexec;
 
 use strict;
-use vars qw($VERSION @ISA);
+use vars qw($VERSION @ISA @EXPORT_OK);
 
 use IO::Socket;
 use Net::Netrc;
+use Exporter;
 
-@ISA = qw();
-$VERSION = '0.10';
-
+@ISA = qw(Exporter);
+@EXPORT_OK = qw(rexec);
+$VERSION = '0.11';
 
 # Preloaded methods go here.
 sub rexec {
@@ -60,15 +61,16 @@ Net::Rexec - Perl extension for the client side of the REXEC protocol.
 
 =head1 SYNOPSIS
 
-  use Net::Rexec;
-  ($rc, @output) = Net::Rexec::rexec(host, command, [userid, [password]]); 
+  use Net::Rexec 'rexec';
+  ($rc, @output) = rexec(host, command, [userid, [password]]); 
   
 
 =head1 DESCRIPTION
 
 Invokes REXEC protocol to execute command on host using userid and password.
 If userid or password are omitted then they are retrieved from the netrc file.
-$rc is 0 if command was invoked on host, 1 otherwise.
+$rc is 0 if command was invoked on host, 1 otherwise unless the fork to invoke
+command fails in which case it is 2.
 Output is put into @output.
 
 =head1 AUTHOR
